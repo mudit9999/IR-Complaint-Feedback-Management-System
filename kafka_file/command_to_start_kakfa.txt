@@ -1,0 +1,3 @@
+bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic twitterstream --from-beginning
+
+NOTE: --topic is user-defined, need not to be same as "twitterstream", you may make it anything. 
