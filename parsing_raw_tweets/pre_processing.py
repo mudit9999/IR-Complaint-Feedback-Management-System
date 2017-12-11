@@ -1,7 +1,7 @@
 import pandas as pd
+
 df=pd.read_csv('tweets_formatted_data.csv')
 df1=df[['msg']]
-
 
 from nltk import word_tokenize
 
@@ -24,7 +24,6 @@ for i in range(0,len(df1)):
                 filtered_sentence.append(w)
         df1.iloc[i][0]=filtered_sentence
 
-
 from nltk.stem import WordNetLemmatizer
 wordnet_lemmatizer=WordNetLemmatizer()
 
@@ -33,8 +32,6 @@ for i in range(0,len(df1)):
         for w in df1.iloc[i][0]:
             filtered_sentence.append(wordnet_lemmatizer.lemmatize(w))
         df1.iloc[i][0]=filtered_sentence   
-
-
         
 import re
 df2=df[['pnr']]
@@ -47,8 +44,6 @@ for i in range(0,len(df1)):
                 for j in txt:
                     str1+=j
                 df2.iloc[i][0]=str1
-
-
 
 for i in range(0,len(df1)):
         temp=[]
@@ -68,4 +63,3 @@ for i in range(0,len(df)):
     df3.iloc[i][1]=df.iloc[i][1]
     df3.iloc[i][2]=df2.iloc[i][0]
     df3.iloc[i][3]=df.iloc[i][3]
-
