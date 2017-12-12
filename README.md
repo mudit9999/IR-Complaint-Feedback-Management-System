@@ -3,11 +3,11 @@
 ### Project Links:
 
 * [Video Demonstration](https://youtu.be/KJEb9Bnffps)
-* [Live Project ](https://32.214.254.199/index.php) (Temporary Hosting Only)
+* [Live Project ](https://32.214.254.199/index.php) (Temporary Hosting, May not be active now!)
 
 ## Pre-Requisites:
 
-* Setup Spark Cluster of atleast 3 Nodes [(Spark Installation)](https://www.tutorialspoint.com/apache_spark/apache_spark_installation.htm)
+* Setup Spark Cluster of atleast 3 Nodes [(Spark Installation)](https://data-flair.training/blogs/install-apache-spark-multi-node-cluster/)
 
 * Install Kakfa & Zookeeper [(Kakfa Installation)](https://www.tutorialspoint.com/apache_kafka/apache_kafka_installation_steps.htm) [(Zookeeper Installation)](https://www.tutorialspoint.com/zookeeper/zookeeper_installation.htm)
 
