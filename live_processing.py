@@ -11,8 +11,10 @@ import pickle
 import json
 import MySQLdb
 
-def insert_tweet(tweet,username,pnr,prediction):
-    query = "INSERT INTO tweets(tweet,username,pnr,prediction) VALUES ('"+tweet+"','"+username+"',"+str(pnr)+","+str(int(prediction))+");"
+
+def insert_tweet(tweet,username,pnr,prediction,tweet_id):
+    #query = "INSERT INTO tweets(tweet,username,pnr,prediction,tweet_id) VALUES ('%s','%s',%s,%s,%s);" % (tweet,username,str(pnr),str(int(prediction)))
+    query = "INSERT INTO tweets(tweet,username,pnr,prediction,tweet_id) VALUES ('"+tweet+"','"+username+"',"+str(pnr)+","+str(int(prediction))+","+str(tweet_id)+");"
     try:
         conn = MySQLdb.connect("localhost","kunwar","","twitter" )
         cursor = conn.cursor()
@@ -26,9 +28,11 @@ def insert_tweet(tweet,username,pnr,prediction):
         conn.close()
 
 from pyspark.streaming import StreamingContext
-conf = SparkConf().setMaster("local[2]").setAppName("IRLive")
+conf = SparkConf().setMaster("local[2]").setAppName("Streamer")
 sc = SparkContext(conf=conf)
 sc.setLogLevel("ERROR")
+val = sc.parallelize("abd")
+
 
 ssc = StreamingContext(sc, 10)
 ssc.checkpoint("checkpoint")
@@ -41,10 +45,11 @@ with open('IRModel', 'rb') as f:
 
 bc_model = sc.broadcast(loadedModel)
 
-def process_data(data):    
-        
+
+def process_data(data):
+
         print("Processing data ...")        
-        
+
         if (not data.isEmpty()):
             nbModel=bc_model.value
             hashingTF = HashingTF(100000)
@@ -57,18 +62,20 @@ def process_data(data):
 
             temp = []
             i=0
-            for p,q in data.collect():
+            for p,q,r in data.collect():
                 temp.append([])
                 temp[i].append(p.encode('utf-8','ignore'))
                 temp[i].append(q)
+                temp[i].append(r)
                 i+=1
             i=0
             for p in prediction.collect():
                 temp[i].append(p)
-                i+=1
+                i+=1		
+
             print(temp)
             for i in temp:
-                insert_tweet(str(i[0]),str(i[1]),"0",int(i[2]))            
+                insert_tweet(str(i[0]),str(i[1]),"0",int(i[3]),int(i[2]))
         else:
             print("Empty RDD !!!")        
             pass
@@ -76,8 +83,12 @@ def process_data(data):
 twitter=tweets.map(lambda tweet: tweet['user']['screen_name'])
 tweet_text = tweets.map(lambda tweet: tweet['text'])
 
-txt = tweets.map(lambda x: (x['text'], x['user']['screen_name']))
+txt = tweets.map(lambda x: (x['text'], x['user']['screen_name'], x['id']))
 txt.foreachRDD(process_data)
+
+#text = tweet_text.map(lambda x: x.encode('utf-8','ignore'))
+#text.foreachRDD(process_data)
+
 
 ssc.start() 
 ssc.awaitTerminationOrTimeout(1000)

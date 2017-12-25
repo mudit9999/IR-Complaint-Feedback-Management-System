@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>index</title>
+	<title>Shell</title>
 </head>
 <body>
 <?php

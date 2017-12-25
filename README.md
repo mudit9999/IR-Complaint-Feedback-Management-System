@@ -13,38 +13,58 @@
 
 * Install Apache-2 (MySQL + Apache Server), PHP-7 on Linux [(LAMP Installation)](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04)
 
+* Python 3
+
 ## STEPS:
 
 (All the following commands have to be executed on terminal)
 
-**STEP-1:** Start kafka-consumer:
+**STEP-1:** Start zookeeper:
+
+```
+$ bin/zookeeper-server-start.sh config/zookeeper.properties
+```
+
+**STEP-2:** Start kafka:
+
+```
+$ bin/kafka-server-start.sh config/server.properties
+```
+
+**STEP-3:** Create kafka topic (only once):
+
+```
+$ bin/kafka-topics.sh --create --zookeeper --partitions 1 --topic twitterstream localhost:2181 --replication-factor 1
+```
+
+**STEP-4:** Start kafka-consumer:
 
 ```
 $ bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic twitterstream --from-beginning
 ```
 
-**STEP-2:** Run stream_data.py file to check tweets are coming or not:
+**STEP-5:** Run stream_data.py file to check tweets are coming or not:
 
 ```
-$ python stream_data.py
+$ python kafka_file/stream_data.py
 ```
 
-**STEP-3:** Next step is to run train_model.py file to train our model, it would produce file "IRModel":
+**STEP-6:** Next step is to run train_model.py file to train our model, it would produce file "IRModel":
 
 ```
 $ spark-submit train_model.py
 ```
 
-**STEP-4:** Create database in MySQL as "twitter" and table with schema:
+**STEP-7:** Create database in MySQL as "twitter" and table with schema:
 
 ```
 CREATE TABLE tweets (id int AUTO_INCREMENT PRIMARY KEY, tweet varchar(140),username varchar(50),pnr bigint(10),prediction int(1), response_status int(1))
 ```
 
-**STEP-5:** Run live_processing.py file to start real-time tweet classification:
+**STEP-8:** Run live_processing.py file to start real-time tweet classification:
 
 ```
 $ spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.1.0 live_processing.py
 ```
 
-**STEP-6:** Finally open index.php file to interact with UI and manage tweets in real-time.
+**STEP-9:** Finally open ```php_files/index.php``` file to interact with UI and manage tweets in real-time.

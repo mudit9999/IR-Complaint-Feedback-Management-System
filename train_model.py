@@ -1,7 +1,7 @@
 import os
 import sys
 
-#FOR WINDOWS USERS:
+#This section for Windows users only
 """os.chdir(r"C:\spark\spark-files")
 os.curdir
 
