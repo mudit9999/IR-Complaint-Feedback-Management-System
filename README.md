@@ -58,7 +58,7 @@ $ spark-submit train_model.py
 **STEP-7:** Create database in MySQL as "twitter" and table with schema:
 
 ```
-CREATE TABLE tweets (id int AUTO_INCREMENT PRIMARY KEY, tweet varchar(140),username varchar(50),pnr bigint(10),prediction int(1), response_status int(1))
+CREATE TABLE tweets (id int AUTO_INCREMENT PRIMARY KEY, tweet varchar(140), username varchar(50), pnr bigint(10), prediction int(1), tweet_id bigint(10), response_status int(1));
 ```
 
 **STEP-8:** Run live_processing.py file to start real-time tweet classification:
