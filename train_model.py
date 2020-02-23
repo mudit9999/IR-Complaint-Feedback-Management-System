@@ -29,7 +29,7 @@ conf.setAppName("IRApp")
 
 sc = SparkContext('local', conf=conf)
 
-tweetData = sc.textFile("tweets_formatted_data.csv")
+tweetData = sc.textFile("data/tweets_formatted_data.csv")
 tweetData.take(2)
 fields = tweetData.map(lambda x: x.split(","))
 fields.take(1)

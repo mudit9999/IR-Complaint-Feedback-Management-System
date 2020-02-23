@@ -13,10 +13,10 @@ import MySQLdb
 
 
 def insert_tweet(tweet,username,pnr,prediction,tweet_id):
-    #query = "INSERT INTO tweets(tweet,username,pnr,prediction,tweet_id) VALUES ('%s','%s',%s,%s,%s);" % (tweet,username,str(pnr),str(int(prediction)))
-    query = "INSERT INTO tweets(tweet,username,pnr,prediction,tweet_id) VALUES ('"+tweet+"','"+username+"',"+str(pnr)+","+str(int(prediction))+","+str(tweet_id)+");"
+    query = 'INSERT INTO tweets(tweet,username,pnr,prediction,tweet_id) VALUES ("%s","%s",%s,%s,%s);' % (tweet,username,str(pnr),str(int(prediction)),str(tweet_id))
+#    query = "INSERT INTO tweets(tweet,username,pnr,prediction,tweet_id) VALUES ('"+tweet+"','"+username+"',"+str(pnr)+","+str(int(prediction))+","+str(tweet_id)+");"
     try:
-        conn = MySQLdb.connect("localhost","kunwar","","twitter" )
+        conn = MySQLdb.connect("localhost","ryan","mark50","twitter" )
         cursor = conn.cursor()
         cursor.execute(query)
         print("Database insertion SUCCESSFUL!!")

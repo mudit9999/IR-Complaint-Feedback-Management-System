@@ -4,10 +4,10 @@ from tweepy import Stream
 from kafka import SimpleProducer, KafkaClient
 import json
 
-access_token = "your_access_token"
-access_token_secret =  "your-access_token_secret"
-consumer_key =  "your_consumer_key"
-consumer_secret =  "your_consumer_secret"
+access_token = "2584490724-ZOEJc5320HRi0fp6VT8uwQfqiNu5Quj6g2oqJm8"
+access_token_secret =  "mWY1yl3z0wnMa8mhyMvw2wYXODtqB6yvmKtmVOAf2bHlL"
+consumer_key =  "9EDriEjU65xa7xibG7i0V1pvi"
+consumer_secret =  "mz73lwClhfAL75OrlwUVzGvJtJaYy75xN8tzFH0c3rmRrKBLry"
 
 class StdOutListener(StreamListener):
     def on_data(self, data):
